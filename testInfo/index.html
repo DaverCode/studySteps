@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>angular.js</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/base.css">
+</head>
+<style type="text/css">
+    .container {
+      width: 960px;
+      margin: 0 auto;
+      height: 600px;
+      background-color: #ccc;
+    }
+
+    .img-box {
+      width: 100vw;
+      height: 120px;
+      background-color: #f00;
+      transform: translateX(calc(( 960px - 100vw) / 2));
+    }
+    .f{
+      border-radius: 50%;
+    }
+    img {
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .calc-box {
+      width: calc(100% - 200px);
+      height: 120px;
+      background-color: green;
+    }
+</style>
+
+<body>
+<a href="#" title="" id="my-gift">点击开始</a>
+    <script type="text/javascript">
+    $(function(){
+        var xe = "qa1mhsapp.class.hujiang.com";
+            var hostKey = xe.split(',');
+            console.log(hostKey)
+            var patt = new RegExp('qa|yz', 'g');
+            var pattEnv = new RegExp('mhs|hs', 'g');
+            var env_exec = patt.exec(hostKey);
+            console.log(env_exec[0])
+            var pattEnv_exec = pattEnv.exec(hostKey);
+            console.log(pattEnv_exec[0])
+            var hrefUrl = env_exec[0] + pattEnv_exec[0] + '.hujiang.com';
+            console.log(hrefUrl);
+        $('#my-gift').attr('href', hrefUrl);
+        });
+    </script>
+    <script type="text/javascript">
+    (function(){
+      var a = 1, b = '1', sum = '', sum1 = '';
+      sum = a + Number(b);
+      sum1 = a + b;
+      console.log(sum,sum1)
+    })();
+    </script>
+
+
+</body>
+
+</html>

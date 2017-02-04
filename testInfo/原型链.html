@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>原型函数研究</title>
+    <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>-->
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <script type="text/javascript">
+        function Person(name, age, job) {
+            this.name = name;
+            this.age = age;
+            this.job = job;
+            this.sayFun = function() {
+                console.log("hello world, I am" + this.name + '!' + this.age + this.job);
+            };
+            console.log(this, typeof this);
+        }
+        //这里将Person实例化为一个对象Person。并赋给p1这个变量，这里的this指的是Person这个对象。并给对象增加三个属性，赋予属性值
+        var p1 = new Person('yangtao', '18', 'webDesigner');
+        console.log(p1, 1)
+        console.log(p1.sayFun(), 2) //这里输出为undefined,是因为p1.sayFun()作为参数传入时，p1.sayFun已经从从原型函数中脱离出来了。
+        var PP = p1.sayFun.bind(p1); //bind()更改了当前的this，使它指向p1
+        console.log(PP(), '2vs');
+        setTimeout(PP, 1000);
+    </script>
+    <script type="text/javascript">
+        //面向对象程序设计,继承
+        (function() { //这是一个闭包函数，可执行
+            var age = '18';
+
+            function Myname(name) {
+                this._name = name; //
+            }
+            Myname.prototype.say = function() {
+                console.log('hello' + this._name + age); //添加原型属性
+            }
+            window.Myname = Myname;
+        }());
+        (function() {
+            function Yourname(name) {
+                this._name = name;
+            }
+            Yourname.prototype = new Myname();
+            var youName = Yourname.prototype.say;
+            Yourname.prototype.say = function() {
+                youName.call(this);
+                console.log('hello' + this._name + 'age')
+            }
+            window.Youname = Yourname;
+        }());
+        var s = new Youname('yangtao');
+        s.say();
+        var obj = {
+            a: 1,
+            b: 2,
+            c: 3
+        };
+        var k = '?' + $.param(obj); //$.param()方法用来对一个数组或对象按照key/value进行序列化
+        console.log(k);
+    </script>
+    <script type="text/javascript">
+        function Person(options) {
+            var data = new Object();
+            data.name = options.name,
+                data.age = options.age,
+                data.job = options.job,
+                data.sayFun = function() {
+                    console.log(this.name + '&' + this.age + '&' + this.job, 666);
+                };
+            return data;
+        }
+        var data1 = {
+            'name': 'yangtao',
+            'age': '18',
+            'job': 'web'
+        };
+        var person = new Person(data1);
+        person.sayFun();
+    </script>
+    <script type="text/javascript">
+        //prototype 属性使您有能力向对象添加属性和方法，其本身也是一个对象
+        function superMan() {
+            this.property = 'yangtao'; //这里的this=>superMan 为其增加一个属性和属性值{property:'yangtao'}
+            console.log(this, 10271, typeof superMan);
+        }
+        superMan.prototype.getName = function() {
+            return this.property;
+        };
+        //			var man = new superMan();
+        //			console.log(man.getName(),1027,man, typeof man)
+        function littleMan() {
+            this.littleProperty = '18岁';
+        }
+        //继承了superMan
+        littleMan.prototype = new superMan();
+        console.log(1027, littleMan.prototype);
+        littleMan.prototype.getAge = function() {
+            return this.littleProperty;
+        }
+        var little = new littleMan();
+        console.log(little.getName(), little.getAge(), '测试', little)
+            //这时的little函数中包含this.littleProperty，getAge，this.property，getName这三个属性
+    </script>
+    <script type="text/javascript">
+        function A() {
+            this.age = '18岁了!'
+        }
+        //			当创建一个函数，它会发生什么呢？
+        //			第一、它会创建1个函数对象 也就是A 本身
+        //			第二、它会创建1个原型对象@A(用@来表示)
+        //			第三、函数对象会有一个prototype指针，它指向了对应的原型对象，这里就指向了@A
+        //			第四、@a对象中有一个construtor指针，指向它的构造函数，这里就指向了A
+        //这个prototype属性究竟有什么用呢？
+        //其实prototype 属性表示当前函数能够控制的范围（或者说它指明了当前函数是谁的构造函数），这里a就是@a原型对象的构造函数，所以我们会看见有这种写法
+        var a1 = new A();
+        console.log(a1, 'ha')
+            //n ew 就是调用原型对象（通过prototype指针）里面构造函数（constructor）创建一个新的对象实例。
+            //那么修改了prototype指向对象里面的属性，也就影响了所有以它为模板创建的实例
+    </script>
+    <script type="text/javascript">
+        //			(function(){
+        //				var nowData = new Date();
+        //				if (nowData.getMonth() == 9 && nowData.getDate() == 27) {
+        //					alert('hellow,yangtao')
+        //				}
+        //			})();
+        //匿名函数，自执行，执行一段代码
+    </script>
+</body>
+
+</html>

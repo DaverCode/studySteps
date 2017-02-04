@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	</head>
+
+	<body>
+		<table border="" cellspacing="" cellpadding="">
+			<tr>
+				筛选: <input type="text" name="r" id="val" placeholder="输入筛选条件" />
+			</tr>
+			<tr>
+				<td>A</td>
+			</tr>
+			<tr>
+				<td>d</td>
+			</tr>
+			<tr>
+				<td>b</td>
+			</tr>
+			<tr>
+				<td>d</td>
+			</tr>
+			<tr>
+				<td>A</td>
+			</tr>
+			<tr>
+				<td>杨A</td>
+			</tr>
+			<tr>
+				<td>A</td>
+			</tr>
+			<tr>
+				<td>杨A333</td>
+			</tr>
+			<tr>
+				<td>A</td>
+			</tr>
+		</table>
+		<script type="text/javascript">
+			$(function() {
+				$('#val').keyup(function() {
+					$('table tr').hide().filter(':contains("' + ($(this).val()) + '")').show();
+				}).keyup();
+			})
+		</script>
+
+	</body>
+
+</html>
